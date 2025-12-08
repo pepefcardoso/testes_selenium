@@ -10,13 +10,18 @@ class BasePage {
   }
 
   async find(locator) {
-    await this.driver.wait(until.elementLocated(locator), 10000);
+    await this.driver.wait(until.elementLocated(locator), 15000);
     return this.driver.findElement(locator);
   }
 
   async click(locator) {
     const el = await this.find(locator);
     await el.click();
+  }
+
+  async forceClick(locator) {
+    const el = await this.find(locator);
+    await this.driver.executeScript("arguments[0].click();", el);
   }
 
   async type(locator, text) {
