@@ -23,8 +23,12 @@ class HomePage extends BasePage {
       'a[title="Veja a tabela completa."], .standings-widget-footer a, .load-more'
     );
 
-    this.mainHeadline = By.css("a.feed-post-link");
+    this.mainHeadline = By.css("div.type-materia a.feed-post-link");
     this.articleTitleH1 = By.css("h1");
+
+    this.botaoMenu = By.css(".gl-header__menu-button, div.menu-button");
+    this.menuF1 = By.id("menu-1-formula-1");
+    this.linkClassificacao = By.css("#menu-2-classificacao a");
   }
 
   async searchFor(term) {
@@ -76,17 +80,40 @@ class HomePage extends BasePage {
   }
 
   async getMainHeadlineUrl() {
-    const el = await this.find(this.mainHeadline);
-    return await el.getAttribute("href");
+    const element = await this.driver.wait(
+      until.elementLocated(this.mainHeadline),
+      10000
+    );
+    return await element.getAttribute("href");
   }
 
   async clickMainHeadline() {
-    await this.forceClick(this.mainHeadline);
+    const element = await this.driver.wait(
+      until.elementLocated(this.mainHeadline),
+      10000
+    );
+
+    await this.driver.executeScript("arguments[0].click();", element);
   }
 
   async getArticleTitle() {
     await this.driver.wait(until.elementLocated(this.articleTitleH1), 10000);
     return await this.getText(this.articleTitleH1);
+  }
+
+  async navegarParaClassificacaoF1() {
+    await this.click(this.botaoMenu);
+
+    await this.driver.sleep(2000);
+
+    const f1Element = await this.find(this.menuF1);
+    await f1Element.click();
+
+    await this.driver.sleep(2000);
+
+    const classifElement = await this.find(this.linkClassificacao);
+
+    await this.driver.executeScript("arguments[0].click();", classifElement);
   }
 }
 
