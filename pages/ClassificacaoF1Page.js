@@ -17,7 +17,14 @@ class ClassificacaoF1Page extends BasePage {
   async obterTabela() {
     const elemento = await this.find(this.tabelaClassificacao);
 
-    await this.driver.wait(until.elementIsVisible(elemento), 10000);
+    await this.driver.executeScript(
+      "arguments[0].scrollIntoView({block: 'center'});",
+      elemento
+    );
+
+    await this.driver.sleep(1000);
+
+    await this.driver.wait(until.elementIsVisible(elemento), 15000);
 
     return elemento;
   }

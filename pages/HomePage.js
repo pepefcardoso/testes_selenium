@@ -103,17 +103,16 @@ class HomePage extends BasePage {
 
   async navegarParaClassificacaoF1() {
     await this.click(this.botaoMenu);
-
     await this.driver.sleep(2000);
 
     const f1Element = await this.find(this.menuF1);
     await f1Element.click();
-
     await this.driver.sleep(2000);
 
     const classifElement = await this.find(this.linkClassificacao);
-
     await this.driver.executeScript("arguments[0].click();", classifElement);
+
+    await this.driver.wait(until.urlContains("classificacao"), 10000);
   }
 }
 
