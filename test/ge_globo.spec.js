@@ -38,6 +38,8 @@ describe("Automação de Testes - GE Globo", function () {
 
     await driver.wait(until.urlContains("busca"), 10000);
 
+    await driver.sleep(5000);
+
     const url = await driver.getCurrentUrl();
     expect(url).to.include("busca");
 
